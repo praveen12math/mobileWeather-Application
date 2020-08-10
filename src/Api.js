@@ -14,14 +14,14 @@ const Api = ({ locationKey }) => {
   useEffect(() => {
 
     async function getData() {
-      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey.Key}?apikey=kAUVOMxAoBnjFcjYeis0shOiulKGGznD&details=true`;
+      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ&details=true`;
       const result = await fetch(api)
       const getResult = await result.json()
       setMyDetail(getResult[0])
     }
 
     async function fiveDay() {
-      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey.Key}?apikey=kAUVOMxAoBnjFcjYeis0shOiulKGGznD&details=true&metric=true`
+      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey[0].Key}?apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ&details=true&metric=true`
       const result = await fetch(api)
       const getResult = await result.json()
       setFiveDayFore(getResult.DailyForecasts)
@@ -60,9 +60,9 @@ const Api = ({ locationKey }) => {
       <Container>
         <h3 className="text-white text-center mt-3">
           <FaMapMarkerAlt /> &nbsp;
-          {locationKey.SupplementalAdminAreas[0]?.EnglishName} &nbsp;
-          {locationKey.AdministrativeArea.EnglishName} &nbsp;
-          {locationKey.Country.EnglishName} &nbsp;
+          {locationKey[0].SupplementalAdminAreas[0]?.EnglishName} &nbsp;
+          {locationKey[0].AdministrativeArea.EnglishName} &nbsp;
+          {locationKey[0].Country.EnglishName} &nbsp;
           {((Date(Date.now())).toString()).slice(0, 24)}
         </h3>
         <Card className="bg-transparent text-white mt-3" style={{ border: "3px solid grey", borderRadius: "1rem" }}>

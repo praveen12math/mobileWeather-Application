@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Api from "./Api";
-import { Container, Card, CardBody, Row, Col } from "reactstrap"
-import { ToastContainer, toast } from "react-toastify"
+import { Container, Card, CardBody, Row, Col, Input, Button } from "reactstrap"
+import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 const Hero = () => {
@@ -18,40 +18,37 @@ const Hero = () => {
   //   locationError = false
   // }
 
-  function showPosition(position) {
-    // var coor = position.coords.longitude + ", " + position.coords.latitude;
-    // alert(coor);
-    mylat = position.coords.latitude;
-    mylong = position.coords.longitude;
-    locationError = false
-  }
-  function errorPosition(error) {
-    alert(error);
-  }
+  //function showPosition(position) {
+  // var coor = position.coords.longitude + ", " + position.coords.latitude;
+  // alert(coor);
+  //   mylat = position.coords.latitude;
+  //   mylong = position.coords.longitude;
+  //   locationError = false
+  // }
+  // function errorPosition(error) {
+  //   alert(error);
+  // }
 
-  navigator.geolocation.watchPosition(showPosition, errorPosition);
+  // navigator.geolocation.watchPosition(showPosition, errorPosition);
+  const [city, setCity] = useState(null)
 
   const [locationKey, setLocationKey] = useState(null);
 
 
-  useEffect(() => {
+  async function fetchKey() {
+    const api = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ`
+    const result = await fetch(api)
+    const getResult = await result.json()
+    console.log(getResult[0].Key);
+    setLocationKey(getResult)
+  }
 
-    async function fetchKey() {
-      const api = `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search.json?q=${mylat},${mylong}&apikey=kAUVOMxAoBnjFcjYeis0shOiulKGGznD`
-      const result = await fetch(api)
-      const getResult = await result.json()
-      setLocationKey(getResult)
-    }
-
-    // const fetchKey = async () => {
-    //   const { data } = await Axios.get(
-    //     `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search.json?q=${mylat},${mylong}&apikey=nQCSgg5V6ne7o3cT2U1TfH2OAY91xaUA`
-    //   );
-    //   setLocationKey(data);
-    // };
-
-    fetchKey();
-  }, [mylat, mylong]);
+  // const fetchKey = async () => {
+  //   const { data } = await Axios.get(
+  //     `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search.json?q=${mylat},${mylong}&apikey=nQCSgg5V6ne7o3cT2U1TfH2OAY91xaUA`
+  //   );
+  //   setLocationKey(data);
+  // };
 
   console.log(locationKey);
 
@@ -60,24 +57,22 @@ const Hero = () => {
     {locationKey ? <Api locationKey={locationKey} /> : <Container>
       <Card className="bg-transparent text-white mt-5" style={{ border: "3px solid grey", borderRadius: "1rem" }}>
         <CardBody>
+          <h5 className="text-center mb-4">Weather Application</h5>
           <Row>
 
-            <Col lg="7" sm="12">
-              <h1> -- ° C</h1> <br />
-              <h1>Something Error</h1>
-            </Col>
-
-            <Col lg="5" sm="12">
-              {<img src="unknown.png" alt="" />}
-              <h2> -- </h2>
-            </Col>
-
+            <Input type="text"
+              placeholder="Enter your city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <Button className="mx-auto mt-3" color="primary" style={{ width: "15%" }}
+              onClick={fetchKey}
+            >See Condition</Button>
           </Row>
-          {locationError ? toast("Allow location access to see Weather Condition", { type: "warning" }) : null}
         </CardBody>
       </Card>
     </Container>}
-    <h5 className="text-center text-white bg-dark">This Application is developed by Praveen in <img src="logo192.png" alt="" className="developerIcon" /></h5>
+    <h6 className="text-center text-white bg-dark">This Application is developed by Praveen with <img src="logo192.png" alt="" className="developerIcon" /></h6>
   </>;
 };
 
