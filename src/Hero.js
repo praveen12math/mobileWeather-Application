@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Api from "./Api";
-import { Container, Card, CardBody, Row, Col, Input, Button } from "reactstrap"
+import { Container, Card, CardBody, Row, Input, Button } from "reactstrap"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 
 const Hero = () => {
-  var mylong = "",
-    mylat = "",
-    locationError = true;
+
 
   // if (navigator.geolocation) {
   //   navigator.geolocation.getCurrentPosition(showPosition);
@@ -53,7 +51,7 @@ const Hero = () => {
   console.log(locationKey);
 
   return <>
-    <ToastContainer position="bottom-right" />
+
     {locationKey ? <Api locationKey={locationKey} /> : <Container>
       <Card className="bg-transparent text-white mt-5" style={{ border: "3px solid grey", borderRadius: "1rem" }}>
         <CardBody>
@@ -72,7 +70,9 @@ const Hero = () => {
         </CardBody>
       </Card>
     </Container>}
-    <h6 className="text-center text-white bg-dark">This Application is developed by Praveen with <img src="logo192.png" alt="" className="developerIcon" /></h6>
+    <h6 className="text-center text-white bg-dark fixed-bottom mb-0">This Application is developed by Praveen with <img src="logo192.png" alt="" className="developerIcon" /></h6>
+    <ToastContainer position="bottom-right" />
+    {toast("Enter city to see weather condition", { type: "warning" })}
   </>;
 };
 
