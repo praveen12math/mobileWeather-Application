@@ -1,0 +1,41 @@
+body {
+  background-image: url("./image.jpg");
+}
+.iconStyle{
+  text-align: center;
+}
+.dailyFore{
+  margin-top: 80px;
+}
+/* .Card{
+  border-radius: 1rem;
+  border: 3px solid rgba(0, 0, 0, 0.125);
+} */
+.row {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.developerIcon{
+  width: 2%;
+}
+@media only screen and (max-width: 600px) {
+  body{
+    text-align: center !important;
+  }
+  .iconStyle{
+    margin-top: 40px;
+  }
+  .dailyFore{
+    margin-top: 50px;
+  }
+  .developerIcon{
+    width: 9%;
+  }
+}
+
+/* .dayCard{
+  text-align: left;
+}
+.nightCard{
+  text-align: right;
+} */
