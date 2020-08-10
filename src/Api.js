@@ -14,14 +14,14 @@ const Api = ({ locationKey }) => {
   useEffect(() => {
 
     async function getData() {
-      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ&details=true`;
+      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw&details=true`;
       const result = await fetch(api)
       const getResult = await result.json()
       setMyDetail(getResult[0])
     }
 
     async function fiveDay() {
-      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey[0].Key}?apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ&details=true&metric=true`
+      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey[0].Key}?apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw&details=true&metric=true`
       const result = await fetch(api)
       const getResult = await result.json()
       setFiveDayFore(getResult.DailyForecasts)
@@ -103,7 +103,7 @@ const Api = ({ locationKey }) => {
       </Container>
 
       <Row className="dailyFore">
-        <Col lg="3" sm="12" className="mb-4">
+        <Col lg="3" sm="12" className="mb-3">
           <Card className="text-center h-100" style={{ borderRadius: "1rem" }}>
             <CardBody>
               <CardTitle>
@@ -145,7 +145,7 @@ const Api = ({ locationKey }) => {
             </h6>
           </Card>
         </Col>
-        <Col lg="3" sm="12" className="mb-4">
+        <Col lg="3" sm="12" className="mb-3">
           <Card className="text-center h-100" style={{ borderRadius: "1rem" }}>
             <CardBody>
               <CardTitle>
@@ -187,7 +187,7 @@ const Api = ({ locationKey }) => {
             </h6>
           </Card>
         </Col>
-        <Col lg="3" sm="12" className="mb-4">
+        <Col lg="3" sm="12" className="mb-3">
           <Card className="text-center h-100" style={{ borderRadius: "1rem" }}>
             <CardBody>
               <CardTitle>
@@ -229,7 +229,7 @@ const Api = ({ locationKey }) => {
             </h6>
           </Card>
         </Col>
-        <Col lg="3" sm="12" className="mb-4">
+        <Col lg="3" sm="12" className="mb-3">
           <Card className="text-center h-100" style={{ borderRadius: "1rem" }}>
             <CardBody>
               <CardTitle>
@@ -262,7 +262,7 @@ const Api = ({ locationKey }) => {
                   {fiveDayFore[4]?.Night.IconPhrase} <br />
                        Rain: {fiveDayFore[4]?.Night.RainProbability}% <br />
                        Snow: {fiveDayFore[4]?.Night.SnowProbability}% <br />
-                       Wind: {fiveDayFore[4]?.Night.Wind.Direction.Localized} {fiveDayFore[4]?.Night.Wind.Speed.Value} km/h
+                       Wind: {fiveDayFore[4]?.Night.Wind.Direction.Localized} {fiveDayFore[3]?.Night.Wind.Speed.Value} km/h
                       </h6>
               </Col>
             </Row>
@@ -272,7 +272,7 @@ const Api = ({ locationKey }) => {
           </Card>
         </Col>
       </Row>
-
+      <br />
     </>
   );
 };

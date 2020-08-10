@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const Hero = () => {
 
-
   // if (navigator.geolocation) {
   //   navigator.geolocation.getCurrentPosition(showPosition);
   // }
@@ -29,15 +28,14 @@ const Hero = () => {
 
   // navigator.geolocation.watchPosition(showPosition, errorPosition);
   const [city, setCity] = useState(null)
-
+  const [toastCheck, setToastCheck] = useState(true)
   const [locationKey, setLocationKey] = useState(null);
 
 
   async function fetchKey() {
-    const api = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=HEyv47OKN1XjX5HvQG4uft5GFGxGcHxQ`
+    const api = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw`
     const result = await fetch(api)
     const getResult = await result.json()
-    console.log(getResult[0].Key);
     setLocationKey(getResult)
   }
 
@@ -63,7 +61,7 @@ const Hero = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
-            <Button className="mx-auto mt-3" color="primary" style={{ width: "15%" }}
+            <Button className="mx-auto mt-3" color="primary"
               onClick={fetchKey}
             >See Condition</Button>
           </Row>
@@ -72,7 +70,10 @@ const Hero = () => {
     </Container>}
     <h6 className="text-center text-white bg-dark fixed-bottom mb-0">This Application is developed by Praveen with <img src="logo192.png" alt="" className="developerIcon" /></h6>
     <ToastContainer position="bottom-right" />
-    {toast("Enter city to see weather condition", { type: "warning" })}
+    {toastCheck ? (
+      toast("Enter city to see weather condition", { type: "warning" }),
+      setToastCheck(false)
+    ) : null}
   </>;
 };
 
