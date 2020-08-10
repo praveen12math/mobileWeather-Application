@@ -4,7 +4,7 @@ import { FaCaretDown, FaCaretUp, FaMapMarkerAlt } from "react-icons/fa"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-const Api = ({ locationKey }) => {
+const Api = ({ locationKey, appKey }) => {
   const [myDetail, setMyDetail] = useState([])
   const [fiveDayFore, setFiveDayFore] = useState([])
   const [min, setMin] = useState("")
@@ -12,16 +12,16 @@ const Api = ({ locationKey }) => {
   const [weekDay] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
 
   useEffect(() => {
-
+    console.log("calling useEffect from Api2");
     async function getData() {
-      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw&details=true`;
+      const api = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey[0].Key}?apikey=${appKey}&details=true`;
       const result = await fetch(api)
       const getResult = await result.json()
       setMyDetail(getResult[0])
     }
 
     async function fiveDay() {
-      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey[0].Key}?apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw&details=true&metric=true`
+      const api = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey[0].Key}?apikey=${appKey}&details=true&metric=true`
       const result = await fetch(api)
       const getResult = await result.json()
       setFiveDayFore(getResult.DailyForecasts)
@@ -32,7 +32,7 @@ const Api = ({ locationKey }) => {
 
     getData();
     fiveDay()
-  }, [locationKey])
+  }, [locationKey, appKey])
 
 
 

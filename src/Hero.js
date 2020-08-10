@@ -2,9 +2,38 @@ import React, { useState } from "react";
 import Api from "./Api";
 import { Container, Card, CardBody, Row, Input, Button } from "reactstrap"
 import { toast, ToastContainer } from "react-toastify"
+import firebase from "firebase/app"
+import "firebase/firestore"
 import 'react-toastify/dist/ReactToastify.css'
 
 const Hero = () => {
+
+  const [appKey, setAppKey] = useState(null)
+  const [firebaseError, setFirebaseError] = useState(true)
+
+  var db = firebase.firestore()
+
+  if (firebaseError) {
+
+    db.collection("key")
+      .doc("iicXTCOB4hg6z5A3dWWR")
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log("Here is your api key - " + doc.data().apiKey);
+          setAppKey(doc.data().apiKey)
+        }
+        else {
+          console.log("No data found");
+        }
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      })
+    setFirebaseError(false)
+  }
+
+
 
   // if (navigator.geolocation) {
   //   navigator.geolocation.getCurrentPosition(showPosition);
@@ -33,7 +62,7 @@ const Hero = () => {
 
 
   async function fetchKey() {
-    const api = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=8OCoG6DBhvKqswVoGVFExlbsxDzxUffw`
+    const api = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=${appKey}`
     const result = await fetch(api)
     const getResult = await result.json()
     setLocationKey(getResult)
@@ -47,10 +76,11 @@ const Hero = () => {
   // };
 
   console.log(locationKey);
+  console.log(appKey);
 
   return <>
 
-    {locationKey ? <Api locationKey={locationKey} /> : <Container>
+    {locationKey ? <Api locationKey={locationKey} appKey={appKey} /> : <Container>
       <Card className="bg-transparent text-white mt-5" style={{ border: "3px solid grey", borderRadius: "1rem" }}>
         <CardBody>
           <h5 className="text-center mb-4">Weather Application</h5>
